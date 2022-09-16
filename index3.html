@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    function MinutesToHours() {
+      const [time, setTime] = React.useState();
+      const [convert, setConvert] = React.useState(false);
+      const onChange = (event) => {
+        setTime(event.target.value);
+      };
+      const reset = (event) => {
+        setTime(0);
+      };
+      const onConvert = (event) => {
+        reset();
+        setConvert((current) => !current);
+      };
+
+      return (
+        <div>
+          <div>
+            <h2>minutes & hours</h2>
+            <label htmlFor="minutes">minutes</label>
+            <input
+              type="number"
+              onChange={onChange}
+              value={convert ? time * 60 : time}
+              disabled={convert}
+            />
+          </div>
+          <div>
+            <label htmlFor="hours">hours</label>
+            <input
+              type="number"
+              onChange={onChange}
+              value={convert ? time : time / 60}
+              disabled={!convert}
+            />
+          </div>
+          <button onClick={onConvert}>
+            {convert ? "minutes to hours" : "hours to minutes"}
+          </button>
+          <button onClick={reset}>Reset</button>
+        </div>
+      );
+    }
+    function KmToMiles() {
+      const [distance, setDistance] = React.useState();
+      const [convert, setConvert] = React.useState(false);
+      const onChange = (event) => {
+        setDistance(event.target.value);
+      };
+      const reset = (event) => {
+        setDistance(0);
+      };
+      const onConvert = (event) => {
+        reset();
+        setConvert((current) => !current);
+      };
+      return (
+        <div>
+          <div>
+            <h2>km & miles</h2>
+            <label htmlFor="km">km</label>
+            <input
+              type="number"
+              onChange={onChange}
+              value={convert ? distance * 1.6 : distance}
+              disabled={convert}
+            />
+          </div>
+          <div>
+            <label htmlFor="miles">miles</label>
+            <input
+              type="number"
+              onChange={onChange}
+              value={convert ? distance : distance * 0.62}
+              disabled={!convert}
+            />
+          </div>
+          <button onClick={onConvert}>
+            {convert ? "miles to km" : "km to miles"}
+          </button>
+          <button onClick={reset}>Reset</button>
+        </div>
+      );
+    }
+    function App() {
+      const [index, setIndex] = React.useState("1");
+      const [convert, setConvert] = React.useState();
+      const optionSelect = (event) => {
+        setIndex(event.target.value);
+      };
+
+      return (
+        <div>
+          <h1>Converter</h1>
+          <select onChange={optionSelect}>
+            <option value="0">Select</option>
+            <option value="1">minutes and hours</option>
+            <option value="2">km and miles</option>
+          </select>
+          {index === "0" ? <h2>Select what you want</h2> : null}
+          {index === "1" ? <MinutesToHours /> : null}
+          {index === "2" ? <KmToMiles /> : null}
+        </div>
+      );
+    }
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+  </script>
+</html>
